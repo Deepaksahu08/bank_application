@@ -4,9 +4,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://mainline.proxy.rlwy.net:13488/railway
     username: postgres
-    password: root
+    password: HMGHQegNAsIfZzFIFhoMmkDaJQTtkwqm
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
