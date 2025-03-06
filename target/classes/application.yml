@@ -1,0 +1,23 @@
+
+server:
+  port: 8990
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
+jwt:
+  tokenSecret: HHGDsdfdsfjk344fjs73jfh47984sdsdf4GSjskG273owyrbnsjrt46Ghdshdj29837HDjsdjhfdjh736567
+  erpTokenSecret: HHGDsdfdsfjk344fjs73jayfh47984sdsdf4GSjsamkG273owyrbnsjrt46Ghdshdj29837HDjsdjhfdjh736567
+  oauthTokenSecret: HHGDsdfdsfjk344fjs73jayfh47984sdsdf4GSjsamkG273owyrbnsjrt46Ghdshdj29837HDjsdjhfdjh736568
+  validityInDays: 60
