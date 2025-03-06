@@ -1,25 +1,22 @@
-# Stage 1: Build the application
+# Importing JDK and copying required files
 FROM openjdk:19-jdk AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src src
 
-# Copy only necessary files first to leverage caching
-COPY pom.xml mvnw .mvn/ ./
-RUN chmod +x ./mvnw && ./mvnw dependency:go-offline --no-transfer-progress
+# Copy Maven wrapper
+COPY mvnw .
+COPY .mvn .mvn
 
-# Now copy the rest of the source code
-COPY src/ src/
-RUN ./mvnw clean package -DskipTests --no-transfer-progress
+# Set execution permission for the Maven wrapper
+RUN chmod +x ./mvnw
+RUN ./mvnw clean package -DskipTests
 
-# Stage 2: Create the final image
-FROM openjdk:19-jdk-slim
-WORKDIR /app
+# Stage 2: Create the final Docker image using OpenJDK 19
+FROM openjdk:19-jdk
 VOLUME /tmp
 
-# Copy the built JAR from the previous stage
+# Copy the JAR from the build stage
 COPY --from=build /app/target/*.jar app.jar
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
-
-# Expose the application port
+ENTRYPOINT ["java","-jar","/app.jar"]
 EXPOSE 8990
