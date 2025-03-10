@@ -35,3 +35,28 @@ git checkout main
 # Pull the latest changes from the main branch
 echo "Pulling the latest changes from the main branch..."
 git pull origin main
+
+# Build the .jar file
+
+echo "Building the .jar file..."
+if [[ -f "pom.xml" ]]; then
+  # Use Maven to build
+  mvn clean package
+elif [[ -f "build.gradle" ]]; then
+  # Use Gradle to build
+  gradle clean build
+else
+  echo "No build tool configuration file (pom.xml or build.gradle) found. Skipping build."
+  exit 1
+fi
+
+# Locate the generated .jar file
+echo "Searching for the generated .jar file..."
+jar_file=$(find target build/libs -name "*.jar" | head -n 1)
+
+if [[ -n "$jar_file" ]]; then
+  echo "Build successful! .jar file created at: $jar_file"
+else
+  echo "Build failed or .jar file not found."
+  exit 1
+fi
