@@ -54,13 +54,19 @@ echo "Enter the name of the new branch:"
 read new_branch
 git checkout -b "$new_branch"
 
+# Add the built .jar file before committing
+if [[ -n "$jar_file" ]]; then
+  cp "$jar_file" .
+  git add "$(basename $jar_file)"
+fi
+
 # Check for uncommitted changes
 if [[ -n "$(git status --porcelain)" ]]; then
   echo "Uncommitted changes found. Adding and committing changes..."
 
   # Add and commit changes
   git add .
-  git commit -m "Automated commit by Deepak"
+  git commit -m "Automated commit by Deepak with built .jar file"
 
   # Push the new branch to the remote repository
   git push origin "$new_branch"
