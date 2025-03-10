@@ -27,7 +27,6 @@ public class UserController {
                 || StringUtils.isEmpty(loginRequest.password())) {
             throw new IllegalArgumentException("error.WrongCredentials");
         }
-        System.out.println("test");
         return userService.login(loginRequest);
 
     }
