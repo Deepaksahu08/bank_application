@@ -19,7 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @PostMapping("/user/login")
     public UserDto.LoginResponse login(
              @RequestBody UserDto.LoginRequest loginRequest) {
