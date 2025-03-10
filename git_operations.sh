@@ -14,15 +14,24 @@ echo "Enter the name of the new branch:"
 read new_branch
 git checkout -b "$new_branch"
 
-# Add and commit changes
-git add .
-git commit -m "Automated commit by Deepak"
+# Check for uncommitted changes
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Uncommitted changes found. Adding and committing changes..."
 
-# Push the new branch to the remote repository
-git push origin "$new_branch"
+  # Add and commit changes
+  git add .
+  git commit -m "Automated commit by Deepak"
+
+  # Push the new branch to the remote repository
+  git push origin "$new_branch"
+else
+  echo "No changes to commit. Skipping commit and push."
+fi
 
 # Switch back to the main branch
+echo "Switching back to the main branch..."
 git checkout main
 
-# Pull the latest changes
+# Pull the latest changes from the main branch
+echo "Pulling the latest changes from the main branch..."
 git pull origin main
