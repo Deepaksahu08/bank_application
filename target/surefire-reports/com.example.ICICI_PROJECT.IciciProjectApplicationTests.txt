@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.ICICI_PROJECT.IciciProjectApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.093 s -- in com.example.ICICI_PROJECT.IciciProjectApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.421 s -- in com.example.ICICI_PROJECT.IciciProjectApplicationTests
