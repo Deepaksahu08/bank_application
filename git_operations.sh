@@ -6,7 +6,7 @@ if ! git config user.name > /dev/null; then
   git config --global user.name "Deepak"
 fi
 if ! git config user.email > /dev/null; then
-  git config --global user.email "your_email@example.com"
+  git config --global user.email "ddshu8060@gmail.com"
 fi
 
 # Build the project
@@ -23,12 +23,12 @@ else
 fi
 
 # Locate the generated .jar file
-jar_file=$(find target build/libs -name "*.jar" | head -n 1)
+jar_file=$(find target -name "*.jar" | head -n 1)
 
 if [[ -n "$jar_file" ]]; then
   echo "Build successful! .jar file created at: $jar_file"
 else
-  echo "Build failed or .jar file not found. Exiting."
+  echo "Build failed or .jar file not found in 'target' directory. Exiting."
   exit 1
 fi
 
@@ -45,10 +45,13 @@ sleep 10
 if ps -p $app_pid > /dev/null; then
   echo "Application is running successfully. Proceeding with the next steps..."
 else
-  echo "Application failed to run. Check application.log for details. Exiting."
+  echo "Application failed to run. Showing the last 10 lines of application.log:"
+  tail -n 10 application.log
+  echo "Exiting."
   exit 1
 fi
 
+<<<<<<< HEAD
 # Create a new branch
 echo "Enter the name of the new branch:"
 read new_branch
@@ -82,28 +85,22 @@ git checkout main
 echo "Pulling the latest changes from the main branch..."
 git pull origin main
 
+=======
+>>>>>>> 3d20cc6 (Automated commit by Deepak with built .jar file)
 # Kill the application running in the background
 echo "Stopping the application..."
 kill $app_pid
 echo "Application stopped successfully."
 
-# Build the .jar file from the main branch
-echo "Building the .jar file from the main branch..."
-if [[ -f "pom.xml" ]]; then
-  mvn clean package
-elif [[ -f "build.gradle" ]]; then
-  gradle clean build
-else
-  echo "No build tool configuration file (pom.xml or build.gradle) found. Skipping build."
-  exit 1
+# Add changes including the .jar file
+if [[ -n "$jar_file" ]]; then
+  cp "$jar_file" .
+  git add "$(basename $jar_file)"
 fi
 
-# Locate the generated .jar file from the main branch
-jar_file_main=$(find target build/libs -name "*.jar" | head -n 1)
+echo "Adding and committing all changes..."
+git add .
+git commit -m "Automated commit by Deepak with built .jar file"
 
-if [[ -n "$jar_file_main" ]]; then
-  echo "Build successful from main branch! .jar file created at: $jar_file_main"
-else
-  echo "Build failed or .jar file not found in main branch."
-  exit 1
-fi
+echo "Pushing changes to the main branch..."
+git push origin main
